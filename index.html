@@ -1,29 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=EG+Garamond:wght@400;500;600;700&family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="./style.css" />
-        <title>Pomodoro App</title>
-      </head>
-  <body>
-    <div class="app-container">
-        <h1>pomodoro</h1>
-        <div class="app-message">press start to begin</div>
-        <div class="app-circle">
-          <div class="circle-shape">
-            <div class="semi-circle right-side circle-mask"></div>
-            <div class="semi-circle right-side circle"></div>
-            <div class="semi-circle left-side circle-mask"></div>
-            <div class="semi-circle left-side circle"></div>
-          </div>
-          <div class="app-counter-box">
-            <p><span class="minutes">25</span>:<span class="seconds">00</span></p>
-          </div>
-          <button class="btn-start">start</button>
-        </div>
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=EG+Garamond:wght@400;500;600;700&family=Fira+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="./style.css" />
+  <title>Pomodoro App</title>
+</head>
+
+<body>
+  <div class="app-container">
+    <h1>pomodoro</h1>
+    <div class="app-message">press start to begin</div>
+    <div class="app-circle">
+      <div class="circle-shape">
+        <div class="semi-circle right-side circle-mask"></div>
+        <div class="semi-circle right-side circle"></div>
+        <div class="semi-circle left-side circle-mask"></div>
+        <div class="semi-circle left-side circle"></div>
+      </div>
+      <div class="app-counter-box">
+        <p><span id="minutes" class="minutes">25</span>:<span class="seconds" id="seconds">00</span></p>
+      </div>
     </div>
-  </body>
-  <script src="./app.js"></script>
+    <button class="btn-start" id="restart"><i class="material-icons">restart_alt</i></button>
+    <button class="btn-start" id="play-pause"><i class="material-icons">play_circle</i></button>
+    <button class="btn-start" id="settings"><i class="material-icons">settings</i></button>
+  </div>
+
+  <div id="modal-edit" class="modal" style="display: none;">
+    <form class="modal-content" action="/action_page.php">
+      <div class="container">
+        <div>Edit minutes</div>
+        <input type="number" id="edited-minutes" name="edited-minutes" min="0" max="60" style="width: 40%;">
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('modal-edit').style.display='none'"
+            class="cancelbtn">Cancel</button>
+          <button id="saveEditedBtn" type="button"
+            class="deletebtn">Save</button>
+        </div>
+        <div id="danger-alert" class="alert" style="margin-top: 120px; display: none;">
+          <span class=" closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          <strong>Danger!</strong> please use numbers between 1 and 60.
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+<script src="./app.js"></script>
+
 </html>

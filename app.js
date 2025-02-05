@@ -1,15 +1,18 @@
 const bells = new Audio('./sounds/bell.wav'); 
-const startBtn = document.querySelector('.btn-start');
-const session = document.querySelector('.minutes'); 
+const startPauseBtn = document.getElementById("play-pause");
+const restartBtn = document.getElementById("restart");
+const settingsBtn = document.getElementById("settings");
+const sessionMinutes = document.getElementById("minutes"); 
 let myInterval; 
-let state = true;
+let started = false;
 
 const appTimer = () => {
-    console.log('APP TIMER FUNCTION')
-    const sessionAmount = Number.parseInt(session.textContent)
+    const idButton = this.document.activeElement.id
+    console.log('APP TIMER FUNCTION', idButton)
+    const sessionAmount = Number.parseInt(sessionMinutes.textContent)
   
-    if(state) {
-      state = false;
+    if(!started) {
+      started = true;
       let totalSeconds = sessionAmount * 60;
   
       const updateSeconds = () => {
@@ -36,9 +39,40 @@ const appTimer = () => {
       myInterval = setInterval(updateSeconds, 1000);
     } else {
       alert('Session has already started.')
+      // pausar
     }
   }
 
+const showEditMinutes = () => {
+  document.getElementById('modal-edit').style.display='block'
+}
+
+// get edited element from input edited-minutes ok
+  // edit this eleemnt sessionMinutes
+// mostrar el modal
+// al hacer click en el boton de salvar revisar si tiene un inut valido y cambiar el numero
+// al hacer click en cancelar dejar e mostrar el modal sin hacer nada
+
+const saveEditedMinutes = () => {
+  const newSessionMinutesInput = document.getElementById("edited-minutes");
+  const newSessionMinutes = newSessionMinutesInput.value;
+  const dangerAlert = document.getElementById('danger-alert')
+  console.log(newSessionMinutesInput);
+
+  if (1 < newSessionMinutes && newSessionMinutes< 61) {
+    sessionMinutes.innerText = newSessionMinutes;
+    newSessionMinutesInput.value = '';
+    document.getElementById('modal-edit').style.display='none'
+    dangerAlert.style.display = 'none';
+  }else{
+    console.log('revisa el iinout')
+    dangerAlert.style.display = 'block';
+    // alert
+  }
+}
 
 
-  startBtn.addEventListener('click', appTimer);
+  restartBtn.addEventListener('click', appTimer)
+  startPauseBtn.addEventListener('click', appTimer);
+  settingsBtn.addEventListener('click', showEditMinutes);
+  saveEditedBtn.addEventListener('click', saveEditedMinutes)
