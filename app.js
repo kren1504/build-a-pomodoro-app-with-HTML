@@ -3,13 +3,13 @@ const startPauseBtn = document.getElementById("play-pause");
 const restartBtn = document.getElementById("restart");
 const settingsBtn = document.getElementById("settings");
 const sessionMinutes = document.getElementById("minutes"); 
+let sessionAmount = Number.parseInt(sessionMinutes.textContent)
 let myInterval; 
 let started = false;
 
 const appTimer = () => {
     const idButton = this.document.activeElement.id
     console.log('APP TIMER FUNCTION', idButton)
-    const sessionAmount = Number.parseInt(sessionMinutes.textContent)
   
     if(!started) {
       started = true;
@@ -39,19 +39,12 @@ const appTimer = () => {
       myInterval = setInterval(updateSeconds, 1000);
     } else {
       alert('Session has already started.')
-      // pausar
     }
   }
 
 const showEditMinutes = () => {
   document.getElementById('modal-edit').style.display='block'
 }
-
-// get edited element from input edited-minutes ok
-  // edit this eleemnt sessionMinutes
-// mostrar el modal
-// al hacer click en el boton de salvar revisar si tiene un inut valido y cambiar el numero
-// al hacer click en cancelar dejar e mostrar el modal sin hacer nada
 
 const saveEditedMinutes = () => {
   const newSessionMinutesInput = document.getElementById("edited-minutes");
@@ -61,18 +54,26 @@ const saveEditedMinutes = () => {
 
   if (1 < newSessionMinutes && newSessionMinutes< 61) {
     sessionMinutes.innerText = newSessionMinutes;
+    sessionAmount = Number.parseInt(sessionMinutes.innerText)
     newSessionMinutesInput.value = '';
     document.getElementById('modal-edit').style.display='none'
     dangerAlert.style.display = 'none';
   }else{
     console.log('revisa el iinout')
     dangerAlert.style.display = 'block';
-    // alert
   }
 }
 
+const restartPomodoro = () => {
+  clearInterval(myInterval);
+  sessionMinutes.textContent = sessionAmount;
+  const secondDiv = document.querySelector('.seconds');
+  secondDiv.textContent = '00';
+  started = false;
+  appTimer()
+}
 
-  restartBtn.addEventListener('click', appTimer)
+  restartBtn.addEventListener('click', restartPomodoro)
   startPauseBtn.addEventListener('click', appTimer);
   settingsBtn.addEventListener('click', showEditMinutes);
   saveEditedBtn.addEventListener('click', saveEditedMinutes)
