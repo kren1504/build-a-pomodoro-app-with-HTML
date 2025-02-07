@@ -33,6 +33,12 @@ const appTimer = () => {
       if (minutesLeft === 0 && secondsLeft === 0) {
         bells.play()
         clearInterval(myInterval);
+        totalSeconds = sessionAmount * 60;
+        sessionMinutes.textContent = sessionAmount;
+        const secondDiv = document.querySelector('.seconds');
+        secondDiv.textContent = '00';
+        started = false;
+        playPauseIcon.innerText = 'play_circle';
       }
     }
     myInterval = setInterval(updateSeconds, 1000);
