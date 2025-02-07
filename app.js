@@ -2,18 +2,17 @@ const bells = new Audio('./sounds/bell.wav');
 const startPauseBtn = document.getElementById("play-pause");
 const restartBtn = document.getElementById("restart");
 const settingsBtn = document.getElementById("settings");
-const sessionMinutes = document.getElementById("minutes"); 
+const sessionMinutes = document.getElementById("minutes");
+const playPauseIcon = document.getElementById('play-pause-icon')
 let sessionAmount = Number.parseInt(sessionMinutes.textContent)
 let myInterval; 
 let started = false;
+let totalSeconds = sessionAmount * 60;
 
 const appTimer = () => {
-    const idButton = this.document.activeElement.id
-    console.log('APP TIMER FUNCTION', idButton)
-  
     if(!started) {
       started = true;
-      let totalSeconds = sessionAmount * 60;
+      playPauseIcon.innerText = 'pause_circle';
   
       const updateSeconds = () => {
         const minuteDiv = document.querySelector('.minutes');
@@ -38,7 +37,9 @@ const appTimer = () => {
       }
       myInterval = setInterval(updateSeconds, 1000);
     } else {
-      alert('Session has already started.')
+      started = false;
+      clearInterval(myInterval)
+      playPauseIcon.innerText = 'play_circle';
     }
   }
 
@@ -50,7 +51,6 @@ const saveEditedMinutes = () => {
   const newSessionMinutesInput = document.getElementById("edited-minutes");
   const newSessionMinutes = newSessionMinutesInput.value;
   const dangerAlert = document.getElementById('danger-alert')
-  console.log(newSessionMinutesInput);
 
   if (0 < newSessionMinutes && newSessionMinutes< 61) {
     clearInterval(myInterval);
@@ -59,17 +59,19 @@ const saveEditedMinutes = () => {
     const secondDiv = document.querySelector('.seconds');
     secondDiv.textContent = '00'
     sessionAmount = Number.parseInt(sessionMinutes.innerText)
+    totalSeconds = sessionAmount * 60;
     newSessionMinutesInput.value = '';
     document.getElementById('modal-edit').style.display='none'
+    playPauseIcon.innerText = 'play_circle';
     dangerAlert.style.display = 'none';
   }else{
-    console.log('revisa el iinout')
     dangerAlert.style.display = 'block';
   }
 }
 
 const restartPomodoro = () => {
   clearInterval(myInterval);
+  totalSeconds = sessionAmount * 60;
   sessionMinutes.textContent = sessionAmount;
   const secondDiv = document.querySelector('.seconds');
   secondDiv.textContent = '00';
