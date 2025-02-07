@@ -172,3 +172,7 @@ html {
   background-color: #f44336;
   color: white;
 }
+
+input[type=number]{
+  -moz-appearance: textfield;
+}
