@@ -52,8 +52,12 @@ const saveEditedMinutes = () => {
   const dangerAlert = document.getElementById('danger-alert')
   console.log(newSessionMinutesInput);
 
-  if (1 < newSessionMinutes && newSessionMinutes< 61) {
+  if (0 < newSessionMinutes && newSessionMinutes< 61) {
+    clearInterval(myInterval);
+    started = false;
     sessionMinutes.innerText = newSessionMinutes;
+    const secondDiv = document.querySelector('.seconds');
+    secondDiv.textContent = '00'
     sessionAmount = Number.parseInt(sessionMinutes.innerText)
     newSessionMinutesInput.value = '';
     document.getElementById('modal-edit').style.display='none'
