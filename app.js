@@ -39,7 +39,7 @@ const appTimer = () => {
     } else {
       started = false;
       clearInterval(myInterval)
-      playPauseIcon.innerText = 'play_circle'
+      playPauseIcon.innerText = 'play_circle';
     }
   }
 
@@ -59,8 +59,10 @@ const saveEditedMinutes = () => {
     const secondDiv = document.querySelector('.seconds');
     secondDiv.textContent = '00'
     sessionAmount = Number.parseInt(sessionMinutes.innerText)
+    totalSeconds = sessionAmount * 60;
     newSessionMinutesInput.value = '';
     document.getElementById('modal-edit').style.display='none'
+    playPauseIcon.innerText = 'play_circle';
     dangerAlert.style.display = 'none';
   }else{
     dangerAlert.style.display = 'block';
