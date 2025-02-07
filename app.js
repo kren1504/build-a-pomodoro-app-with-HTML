@@ -1,50 +1,50 @@
-const bells = new Audio('./sounds/bell.wav'); 
+const bells = new Audio('./sounds/bell.wav');
 const startPauseBtn = document.getElementById("play-pause");
 const restartBtn = document.getElementById("restart");
 const settingsBtn = document.getElementById("settings");
 const sessionMinutes = document.getElementById("minutes");
 const playPauseIcon = document.getElementById('play-pause-icon')
 let sessionAmount = Number.parseInt(sessionMinutes.textContent)
-let myInterval; 
+let myInterval;
 let started = false;
 let totalSeconds = sessionAmount * 60;
 
 const appTimer = () => {
-    if(!started) {
-      started = true;
-      playPauseIcon.innerText = 'pause_circle';
-  
-      const updateSeconds = () => {
-        const minuteDiv = document.querySelector('.minutes');
-        const secondDiv = document.querySelector('.seconds');
-      
-        totalSeconds--;
-      
-        let minutesLeft = Math.floor(totalSeconds/60);
-        let secondsLeft = totalSeconds % 60;
-      
-        if(secondsLeft < 10) {
-          secondDiv.textContent = '0' + secondsLeft;
-        } else {
-          secondDiv.textContent = secondsLeft;
-        }
-        minuteDiv.textContent = `${minutesLeft}`
-      
-        if(minutesLeft === 0 && secondsLeft === 0) {
-          bells.play()
-          clearInterval(myInterval);
-        }
+  if (!started) {
+    started = true;
+    playPauseIcon.innerText = 'pause_circle';
+
+    const updateSeconds = () => {
+      const minuteDiv = document.querySelector('.minutes');
+      const secondDiv = document.querySelector('.seconds');
+
+      totalSeconds--;
+
+      let minutesLeft = Math.floor(totalSeconds / 60);
+      let secondsLeft = totalSeconds % 60;
+
+      if (secondsLeft < 10) {
+        secondDiv.textContent = '0' + secondsLeft;
+      } else {
+        secondDiv.textContent = secondsLeft;
       }
-      myInterval = setInterval(updateSeconds, 1000);
-    } else {
-      started = false;
-      clearInterval(myInterval)
-      playPauseIcon.innerText = 'play_circle';
+      minuteDiv.textContent = `${minutesLeft}`
+
+      if (minutesLeft === 0 && secondsLeft === 0) {
+        bells.play()
+        clearInterval(myInterval);
+      }
     }
+    myInterval = setInterval(updateSeconds, 1000);
+  } else {
+    started = false;
+    clearInterval(myInterval)
+    playPauseIcon.innerText = 'play_circle';
   }
+}
 
 const showEditMinutes = () => {
-  document.getElementById('modal-edit').style.display='block'
+  document.getElementById('modal-edit').style.display = 'block'
 }
 
 const saveEditedMinutes = () => {
@@ -52,7 +52,7 @@ const saveEditedMinutes = () => {
   const newSessionMinutes = newSessionMinutesInput.value;
   const dangerAlert = document.getElementById('danger-alert')
 
-  if (0 < newSessionMinutes && newSessionMinutes< 61) {
+  if (0 < newSessionMinutes && newSessionMinutes < 61) {
     clearInterval(myInterval);
     started = false;
     sessionMinutes.innerText = newSessionMinutes;
@@ -61,10 +61,10 @@ const saveEditedMinutes = () => {
     sessionAmount = Number.parseInt(sessionMinutes.innerText)
     totalSeconds = sessionAmount * 60;
     newSessionMinutesInput.value = '';
-    document.getElementById('modal-edit').style.display='none'
+    document.getElementById('modal-edit').style.display = 'none'
     playPauseIcon.innerText = 'play_circle';
     dangerAlert.style.display = 'none';
-  }else{
+  } else {
     dangerAlert.style.display = 'block';
   }
 }
@@ -79,7 +79,7 @@ const restartPomodoro = () => {
   appTimer()
 }
 
-  restartBtn.addEventListener('click', restartPomodoro)
-  startPauseBtn.addEventListener('click', appTimer);
-  settingsBtn.addEventListener('click', showEditMinutes);
-  saveEditedBtn.addEventListener('click', saveEditedMinutes)
+restartBtn.addEventListener('click', restartPomodoro)
+startPauseBtn.addEventListener('click', appTimer);
+settingsBtn.addEventListener('click', showEditMinutes);
+saveEditedBtn.addEventListener('click', saveEditedMinutes)
